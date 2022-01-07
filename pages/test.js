@@ -31,7 +31,15 @@ const Index = ({ data }) => {
       <div className="flex flex-wrap">
         {pokemons.map((pokemon) => {
           return (
-            <div key={pokemon.id} className="p-5">
+            <div
+              key={pokemon.id}
+              className={`m-5 p-2 ${
+                pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name ==
+                "electric"
+                  ? "bg-yellow-200"
+                  : "bg-white"
+              }`}
+            >
               <img
                 src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
               />
