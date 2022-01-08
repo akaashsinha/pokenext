@@ -29,12 +29,13 @@ const Index = ({ data }) => {
   return (
     <>
       <h1 className="text-center text-3xl font-bold">Pokémon</h1>
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap justify-center">
         {pokemons.map((pokemon) => {
           return (
             <div
               key={pokemon.id}
-              className={`m-5 p-2 rounded-2xl text-center drop-shadow-md hover:drop-shadow-xl ${
+              id={pokemon.id}
+              className={`m-5 p-8 rounded-2xl text-center drop-shadow-md hover:drop-shadow-xl ${
                 pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name ==
                 "electric"
                   ? "bg-yellow-400"
