@@ -1,5 +1,4 @@
 import { ApolloClient, gql, InMemoryCache } from "@apollo/client";
-import Image from "next/image";
 
 export const getStaticProps = async () => {
   const client = new ApolloClient({
