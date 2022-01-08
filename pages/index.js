@@ -28,7 +28,7 @@ const Index = ({ data }) => {
   const pokemons = data.data.pokemon_v2_pokemon;
   return (
     <>
-      <h1 className="text-center">Pokemon</h1>
+      <h1 className="text-center text-3xl font-bold">Pokémon</h1>
       <div className="flex flex-wrap">
         {pokemons.map((pokemon) => {
           return (
@@ -126,6 +126,31 @@ const Index = ({ data }) => {
              `}
             >
               {/* Use brightness-0 for name that pokemon */}
+              <p
+                className={`text-left font-bold text-lg ${
+                  pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name ==
+                  "fighting"
+                    ? "text-white"
+                    : ""
+                } ${
+                  pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name ==
+                  "ghost"
+                    ? "text-white"
+                    : ""
+                } ${
+                  pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name ==
+                  "rock"
+                    ? "text-white"
+                    : ""
+                } ${
+                  pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name ==
+                  "dragon"
+                    ? "text-white"
+                    : ""
+                }`}
+              >
+                {pokemon.id}
+              </p>
               <img
                 className=""
                 src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
@@ -133,16 +158,75 @@ const Index = ({ data }) => {
               />
               <p className="capitalize">
                 <a
-                  className="hover:text-blue-500"
+                  className={`hover:text-blue-500 ${
+                    pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name ==
+                    "fighting"
+                      ? "text-white"
+                      : ""
+                  } ${
+                    pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name ==
+                    "ghost"
+                      ? "text-white"
+                      : ""
+                  } ${
+                    pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name ==
+                    "rock"
+                      ? "text-white"
+                      : ""
+                  } ${
+                    pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name ==
+                    "dragon"
+                      ? "text-white"
+                      : ""
+                  }`}
                   href={`/pokemon/${pokemon.name}`}
                 >
                   {pokemon.name}
                 </a>
               </p>
-              <p className="capitalize text-sm">
+              <p
+                className={`capitalize text-sm ${
+                  pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name ==
+                  "fighting"
+                    ? "text-white"
+                    : ""
+                } ${
+                  pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name ==
+                  "ghost"
+                    ? "text-white"
+                    : ""
+                } ${
+                  pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name ==
+                  "rock"
+                    ? "text-white"
+                    : ""
+                } ${
+                  pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name ==
+                  "dragon"
+                    ? "text-white"
+                    : ""
+                }`}
+              >
                 {pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name}
               </p>
-              <p className="capitalize text-sm">
+              <p
+                className={`capitalize text-sm ${
+                  pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name ==
+                  "ghost"
+                    ? "text-white"
+                    : ""
+                } ${
+                  pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name ==
+                  "rock"
+                    ? "text-white"
+                    : ""
+                } ${
+                  pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name ==
+                  "dragon"
+                    ? "text-white"
+                    : ""
+                }`}
+              >
                 {pokemon.pokemon_v2_pokemontypes[1]?.pokemon_v2_type.name}
               </p>
             </div>
