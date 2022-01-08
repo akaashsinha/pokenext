@@ -1,5 +1,6 @@
 import { HomeIcon, PuzzleIcon } from "@heroicons/react/outline";
 import Link from "next/link";
+//minor edit
 const Navbar = () => {
   return (
     <div className="fixed top-0 left-0 h-screen w-16 flex flex-col bg-red-500 drop-shadow-md justify-evenly items-center">
