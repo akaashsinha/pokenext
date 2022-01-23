@@ -1,5 +1,5 @@
 import { ApolloClient, gql, InMemoryCache } from "@apollo/client";
-
+import Image from "next/image";
 export const getStaticProps = async () => {
   const client = new ApolloClient({
     uri: `https://beta.pokeapi.co/graphql/v1beta`,
@@ -35,7 +35,7 @@ const Index = ({ data }) => {
             <div
               key={pokemon.id}
               id={pokemon.id}
-              className={`m-5 p-8 rounded-2xl text-center drop-shadow-md hover:drop-shadow-xl ${
+              className={`sm:m-5 m-3 sm:p-8 p-2 rounded-2xl text-center drop-shadow-md hover:drop-shadow-xl ${
                 pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name ==
                 "electric"
                   ? "bg-yellow-400"
@@ -150,12 +150,14 @@ const Index = ({ data }) => {
                     : ""
                 }`}
               >
-                {pokemon.id}
+                #{pokemon.id}
               </p>
-              <img
-                className=""
+              <Image
                 src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
                 alt={pokemon.name}
+                layout="intrinsic"
+                width={95}
+                height={95}
               />
               <p className="capitalize">
                 <a

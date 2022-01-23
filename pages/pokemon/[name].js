@@ -1,4 +1,5 @@
 import { ApolloClient, gql, InMemoryCache } from "@apollo/client";
+import Image from "next/image";
 
 export const getStaticPaths = async () => {
   const client = new ApolloClient({
@@ -41,17 +42,34 @@ export const getStaticProps = async (context) => {
               name
             }
           }
+          height
+          base_experience
+          weight
+        }
+        pokemon_v2_pokemonspeciesflavortext(
+          where: {
+            pokemon_v2_language: { name: { _eq: "en" } }
+            pokemon_v2_version: { id: { _eq: 1 } }
+          }
+        ) {
+          flavor_text
         }
       }
     `,
     variables: { name },
   });
+
   return {
-    props: { pokemon: data.data.pokemon_v2_pokemon[0] },
+    props: {
+      pokemon: data.data.pokemon_v2_pokemon[0],
+      // nextPokemon: nextPokemon.data.pokemon_v2_pokemon[0],
+      descriptions: data.data.pokemon_v2_pokemonspeciesflavortext,
+    },
   };
 };
-const PokemonPage = ({ pokemon }) => {
-  console.log(pokemon);
+const PokemonPage = ({ pokemon, descriptions }) => {
+  console.log(descriptions[4].flavor_text.replace(/[^a-z0-9 ,.?!]/gi, " "));
+  const { id, name, height, weight } = pokemon;
   return (
     <>
       <div
@@ -141,16 +159,47 @@ const PokemonPage = ({ pokemon }) => {
               }
              `}
       >
+        <p className="text-left text-xl font-bold">#{id}</p>
+        {/* <p className="text-right text-xl font-bold">#{nextPokemon?.id}</p> */}
+        <h1 className="capitalize text-2xl text-center font-extrabold">
+          {name}
+        </h1>
         <div className="flex justify-center">
-          <img
-            className=""
-            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
-            alt={pokemon.name}
+          <Image
+            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
+            alt={`${name} front`}
+            layout="intrinsic"
+            width={95}
+            height={95}
+          />
+          <Image
+            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${id}.png`}
+            alt={`${name} back`}
+            layout="intrinsic"
+            width={95}
+            height={95}
           />
         </div>
-        <h1>{pokemon.name}</h1>
-        <p>{pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name}</p>
-        <p>{pokemon.pokemon_v2_pokemontypes[1]?.pokemon_v2_type.name}</p>
+        <p className={`capitalize`}>
+          {pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name}
+        </p>
+        <p className="capitalize">
+          {pokemon.pokemon_v2_pokemontypes[1]?.pokemon_v2_type.name}
+        </p>
+        {/* <button className="bg-blue-500 rounded-xl p-2">
+          {pokemon.pokemon_v2_pokemontypes[1]?.pokemon_v2_type.name}
+        </button> */}
+        <p>
+          <span className="font-bold">Height:</span> {height / 10} m
+        </p>
+        <p>
+          {" "}
+          <span className="font-bold">Weight:</span> {weight / 10} kg
+        </p>
+        <p className="">{`${descriptions[id - 1].flavor_text.replace(
+          /[^a-z0-9 ,.?!É]/gi,
+          " "
+        )}`}</p>
       </div>
     </>
   );
