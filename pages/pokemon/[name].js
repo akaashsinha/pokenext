@@ -1,4 +1,5 @@
 import { ApolloClient, gql, InMemoryCache } from "@apollo/client";
+import { NextSeo } from "next-seo";
 import Image from "next/image";
 
 export const getStaticPaths = async () => {
@@ -68,10 +69,17 @@ export const getStaticProps = async (context) => {
   };
 };
 const PokemonPage = ({ pokemon, descriptions }) => {
-  console.log(descriptions[4].flavor_text.replace(/[^a-z0-9 ,.?!]/gi, " "));
   const { id, name, height, weight } = pokemon;
+  const SEO = {
+    title: `${name.charAt(0).toUpperCase()}${name.slice(1)}`,
+    description: `${name} - ${descriptions[id - 1].flavor_text.replace(
+      /[^a-z0-9 ,.?!É]/gi,
+      " "
+    )}`,
+  };
   return (
     <>
+      <NextSeo {...SEO} />
       <div
         className={`m-5 p-8 rounded-2xl text-center drop-shadow-md hover:drop-shadow-xl ${
           pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name == "electric"
