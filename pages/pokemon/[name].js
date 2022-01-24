@@ -73,7 +73,7 @@ const PokemonPage = ({ pokemon, descriptions }) => {
   const SEO = {
     title: `${name.charAt(0).toUpperCase()}${name.slice(1)}`,
     description: `${name} - ${descriptions[id - 1].flavor_text.replace(
-      /[^a-z0-9 ,.?!É]/gi,
+      /[^a-z0-9 ,.?!É']/gi,
       " "
     )}`,
   };
@@ -205,7 +205,7 @@ const PokemonPage = ({ pokemon, descriptions }) => {
           <span className="font-bold">Weight:</span> {weight / 10} kg
         </p>
         <p className="">{`${descriptions[id - 1].flavor_text.replace(
-          /[^a-z0-9 ,.?!É]/gi,
+          /[^a-z0-9 ,.?!É']/gi,
           " "
         )}`}</p>
       </div>
