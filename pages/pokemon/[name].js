@@ -46,6 +46,11 @@ export const getStaticProps = async (context) => {
           height
           base_experience
           weight
+          pokemon_v2_pokemonabilities {
+            pokemon_v2_ability {
+              name
+            }
+          }
         }
         pokemon_v2_pokemonspeciesflavortext(
           where: {
@@ -188,22 +193,43 @@ const PokemonPage = ({ pokemon, descriptions }) => {
             height={95}
           />
         </div>
-        <p className={`capitalize`}>
-          {pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name}
-        </p>
-        <p className="capitalize">
-          {pokemon.pokemon_v2_pokemontypes[1]?.pokemon_v2_type.name}
-        </p>
-        {/* <button className="bg-blue-500 rounded-xl p-2">
-          {pokemon.pokemon_v2_pokemontypes[1]?.pokemon_v2_type.name}
-        </button> */}
-        <p>
-          <span className="font-bold">Height:</span> {height / 10} m
-        </p>
-        <p>
-          {" "}
-          <span className="font-bold">Weight:</span> {weight / 10} kg
-        </p>
+        <div className="flex py-4 gap-4">
+          <div className="flex-auto">
+            <p className="font-bold">Types</p>
+            <p className={`capitalize`}>
+              {pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name}
+            </p>
+            <p className="capitalize">
+              {pokemon.pokemon_v2_pokemontypes[1]?.pokemon_v2_type.name}
+            </p>
+          </div>
+          <div className="flex-auto">
+            <p>
+              <span className="font-bold">Height:</span> {height / 10} m
+            </p>
+            <p>
+              {" "}
+              <span className="font-bold">Weight:</span> {weight / 10} kg
+            </p>
+          </div>
+          <div className="flex-auto">
+            <p className="font-bold">Abilities</p>
+            <p className="capitalize">
+              {" "}
+              {pokemon.pokemon_v2_pokemonabilities[0].pokemon_v2_ability.name.replace(
+                "-",
+                " "
+              )}
+            </p>
+            <p className="capitalize">
+              {pokemon.pokemon_v2_pokemonabilities[1]?.pokemon_v2_ability.name.replace(
+                "-",
+                " "
+              )}
+            </p>
+          </div>
+        </div>
+
         <p className="">{`${descriptions[id - 1].flavor_text.replace(
           /[^a-z0-9 ,.?!É']/gi,
           " "
