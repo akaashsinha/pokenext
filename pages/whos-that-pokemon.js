@@ -32,15 +32,18 @@ const WhosThatPokemon = ({ pokemon }) => {
   const [guess, setGuess] = useState("");
   const onChange = (e) => setGuess(e.target.value);
   const [results, setResults] = useState("");
+  const [victory, setVictory] = useState(false);
+
   const game = () => {
     setGuess(guess);
-    console.log(guess);
     console.log(`The answer is ${pokemon[randomNumber - 1].name}`);
     if (guess.toLowerCase() === pokemon[randomNumber - 1].name.toLowerCase()) {
       setResults(<p>Congrats you win!</p>);
       setGuess("");
+      setVictory(true);
     } else {
       setResults(<p>Keep trying!</p>);
+      setVictory(false);
     }
   };
 
@@ -48,7 +51,6 @@ const WhosThatPokemon = ({ pokemon }) => {
     window.location.reload(false);
     setGuess("");
   };
-
   return (
     <>
       <h1 className="text-4xl font-bold text-center">
@@ -57,14 +59,13 @@ const WhosThatPokemon = ({ pokemon }) => {
       <div className="flex justify-center">
         <div className="">
           <Image
-            className="brightness-0"
+            className={`${victory ? "" : "brightness-0"}`}
             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${randomNumber}.png`}
             alt={`Guess that Pokemon`}
             layout="responsive"
             width={300}
             height={300}
           />
-          <p className="text-center"> {pokemon[randomNumber - 1].name}</p>
           <input
             type="text"
             className="form-input rounded-full"
@@ -73,7 +74,6 @@ const WhosThatPokemon = ({ pokemon }) => {
             style={{ color: "blue" }}
             onChange={onChange}
           />
-          {/* <input type="number" name="" id="" /> */}
           <button
             className="bg-blue-500 text-white rounded-full p-2 mx-2"
             onClick={game}
@@ -81,7 +81,7 @@ const WhosThatPokemon = ({ pokemon }) => {
             Guess
           </button>
           <button
-            className="bg-blue-500 text-white rounded-full p-2 mx-2"
+            className="bg-red-500 text-white rounded-full p-2 mx-2"
             onClick={refresh}
           >
             Refresh
@@ -89,7 +89,6 @@ const WhosThatPokemon = ({ pokemon }) => {
           {results}
         </div>
       </div>
-      <form>{/* <input type="text" name="" id="" value={guess} /> */}</form>
     </>
   );
 };
