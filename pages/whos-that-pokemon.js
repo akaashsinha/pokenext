@@ -3,6 +3,8 @@ import { NextSeo } from "next-seo";
 import Image from "next/image";
 import { useState } from "react";
 
+const randomNumber = Math.floor(Math.random() * 151);
+
 export const getStaticProps = async (context) => {
   const client = new ApolloClient({
     uri: `https://beta.pokeapi.co/graphql/v1beta`,
@@ -26,23 +28,68 @@ export const getStaticProps = async (context) => {
 };
 const WhosThatPokemon = ({ pokemon }) => {
   // console.log(pokemon);
-  let randomNumber = Math.floor(Math.random() * 150);
+
   const [guess, setGuess] = useState("");
+  const onChange = (e) => setGuess(e.target.value);
+  const [results, setResults] = useState("");
+  const game = () => {
+    setGuess(guess);
+    console.log(guess);
+    console.log(`The answer is ${pokemon[randomNumber - 1].name}`);
+    if (guess.toLowerCase() === pokemon[randomNumber - 1].name.toLowerCase()) {
+      setResults(<p>Congrats you win!</p>);
+      setGuess("");
+    } else {
+      setResults(<p>Keep trying!</p>);
+    }
+  };
+
+  const refresh = () => {
+    window.location.reload(false);
+    setGuess("");
+  };
+
   return (
     <>
       <h1 className="text-4xl font-bold text-center">
         {"Who's That Pokémon?"}
       </h1>
-      <Image
-        className=""
-        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${randomNumber}.png`}
-        alt={`Guess that Pokemon`}
-        layout="intrinsic"
-        width={95}
-        height={95}
-      />
+      <div className="flex justify-center">
+        <div className="">
+          <Image
+            className="brightness-0"
+            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${randomNumber}.png`}
+            alt={`Guess that Pokemon`}
+            layout="responsive"
+            width={300}
+            height={300}
+          />
+          <p className="text-center"> {pokemon[randomNumber - 1].name}</p>
+          <input
+            type="text"
+            className="form-input rounded-full"
+            name="guessPokemon"
+            value={guess}
+            style={{ color: "blue" }}
+            onChange={onChange}
+          />
+          {/* <input type="number" name="" id="" /> */}
+          <button
+            className="bg-blue-500 text-white rounded-full p-2 mx-2"
+            onClick={game}
+          >
+            Guess
+          </button>
+          <button
+            className="bg-blue-500 text-white rounded-full p-2 mx-2"
+            onClick={refresh}
+          >
+            Refresh
+          </button>
+          {results}
+        </div>
+      </div>
       <form>{/* <input type="text" name="" id="" value={guess} /> */}</form>
-      <input type="text" name="guessPokemon" id="" />
     </>
   );
 };
