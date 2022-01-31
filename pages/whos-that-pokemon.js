@@ -37,7 +37,6 @@ const WhosThatPokemon = ({ pokemon }) => {
 
   const game = () => {
     setGuess(guess);
-    console.log(`The answer is ${pokemon[randomNumber - 1].name}`);
     if (guess.toLowerCase() === pokemon[randomNumber - 1].name.toLowerCase()) {
       setResults(
         <div>
@@ -63,6 +62,26 @@ const WhosThatPokemon = ({ pokemon }) => {
   const refresh = () => {
     window.location.reload(false);
     setGuess("");
+  };
+
+  const giveUp = () => {
+    setVictory(true);
+    setResults(
+      <div>
+        <p>
+          It was{" "}
+          <span className="capitalize">{pokemon[randomNumber - 1].name}</span>!
+        </p>
+        <p>
+          Learn more about{" "}
+          <Link href={`/pokemon/${pokemon[randomNumber - 1].name}`}>
+            <a className="capitalize text-blue-500">
+              {pokemon[randomNumber - 1].name}
+            </a>
+          </Link>
+        </p>
+      </div>
+    );
   };
   return (
     <>
@@ -94,16 +113,16 @@ const WhosThatPokemon = ({ pokemon }) => {
             Guess
           </button>
           <button
-            className="bg-red-500 text-white rounded-full mx-2 p-3"
-            onClick={() => setVictory(true)}
-          >
-            Give Up
-          </button>
-          <button
             className="bg-green-500 text-white rounded-full p-3 mx-2"
             onClick={refresh}
           >
             Refresh
+          </button>
+          <button
+            className="bg-red-500 text-white rounded-full mx-2 p-3"
+            onClick={giveUp}
+          >
+            Give Up
           </button>
           {results}
         </div>
