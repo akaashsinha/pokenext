@@ -1,6 +1,7 @@
 import { ApolloClient, gql, InMemoryCache } from "@apollo/client";
 import { NextSeo } from "next-seo";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 const randomNumber = Math.floor(Math.random() * 151);
@@ -38,7 +39,19 @@ const WhosThatPokemon = ({ pokemon }) => {
     setGuess(guess);
     console.log(`The answer is ${pokemon[randomNumber - 1].name}`);
     if (guess.toLowerCase() === pokemon[randomNumber - 1].name.toLowerCase()) {
-      setResults(<p>Congrats you win!</p>);
+      setResults(
+        <div>
+          <p>Congrats you win!</p>
+          <p>
+            Learn more about{" "}
+            <Link href={`/pokemon/${pokemon[randomNumber - 1].name}`}>
+              <a className="capitalize text-blue-500">
+                {pokemon[randomNumber - 1].name}
+              </a>
+            </Link>
+          </p>
+        </div>
+      );
       setGuess("");
       setVictory(true);
     } else {
@@ -57,7 +70,7 @@ const WhosThatPokemon = ({ pokemon }) => {
         {"Who's That Pokémon?"}
       </h1>
       <div className="flex justify-center">
-        <div className="">
+        <div className="justify-center">
           <Image
             className={`${victory ? "" : "brightness-0"}`}
             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${randomNumber}.png`}
@@ -75,13 +88,19 @@ const WhosThatPokemon = ({ pokemon }) => {
             onChange={onChange}
           />
           <button
-            className="bg-blue-500 text-white rounded-full p-2 mx-2"
+            className="bg-blue-500 text-white rounded-full p-3 mx-2"
             onClick={game}
           >
             Guess
           </button>
           <button
-            className="bg-red-500 text-white rounded-full p-2 mx-2"
+            className="bg-red-500 text-white rounded-full mx-2 p-3"
+            onClick={() => setVictory(true)}
+          >
+            Give Up
+          </button>
+          <button
+            className="bg-green-500 text-white rounded-full p-3 mx-2"
             onClick={refresh}
           >
             Refresh
